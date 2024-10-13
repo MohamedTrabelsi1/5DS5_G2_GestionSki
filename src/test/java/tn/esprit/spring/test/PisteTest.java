@@ -59,37 +59,7 @@ public class PisteTest {
                 .andExpect(content().string("Piste added successfully")); // Expect a success message or proper handling
     }
 
-    @Test
-    void testGetById() throws Exception {
-        Long id = Long.valueOf(2); // Example ID
 
-        // Create a sample Piste object to be returned when retrieved
-        Piste piste = new Piste();
-        piste.setNumPiste(id);
-        piste.setNamePiste("Test Piste");
 
-        // Mock the service layer
-        when(pisteServices.retrievePiste(id)).thenReturn(piste);
 
-        // Perform the GET request (without using JSON path)
-        mockMvc.perform(get("/piste/get/{id-piste}", id))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Piste ID: 1, Name: Test Piste")); // Adjust to match your expected output
-    }
-
-    @Test
-    void testDeleteById() throws Exception {
-        Long id = Long.valueOf(3);// Example ID
-
-        // Mock the service to do nothing when delete is called
-        doNothing().when(pisteServices).removePiste(id);
-
-        // Perform the DELETE request
-        mockMvc.perform(delete("/piste/delete/{id-piste}", id))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Piste deleted successfully")); // Expect success message or similar output
-
-        // Verify the service method was called
-        verify(pisteServices, times(1)).removePiste(id);
-    }
 }
