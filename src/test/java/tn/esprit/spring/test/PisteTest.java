@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tn.esprit.spring.GestionStationSkiApplication;
 import tn.esprit.spring.controllers.PisteRestController;
+import tn.esprit.spring.entities.Color;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.services.IPisteServices;
 
@@ -43,6 +44,9 @@ public class PisteTest {
         // Create a sample Piste object
         Piste piste = new Piste();
         piste.setNumPiste(Long.valueOf(3)); // Set an example ID or other properties
+        piste.setColor(Color.BLUE);
+        piste.setLength(20);
+        piste.setSlope(20);
 
         // Mock the service layer to return this object when called
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
@@ -57,7 +61,7 @@ public class PisteTest {
 
     @Test
     void testGetById() throws Exception {
-        Long id = Long.valueOf(3); // Example ID
+        Long id = Long.valueOf(2); // Example ID
 
         // Create a sample Piste object to be returned when retrieved
         Piste piste = new Piste();
