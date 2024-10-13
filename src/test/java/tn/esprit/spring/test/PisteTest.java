@@ -42,7 +42,7 @@ public class PisteTest {
     void testAddPiste() throws Exception {
         // Create a sample Piste object
         Piste piste = new Piste();
-        piste.setNumPiste(1L); // Set an example ID or other properties
+        piste.setNumPiste(Long.valueOf(3)); // Set an example ID or other properties
 
         // Mock the service layer to return this object when called
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
@@ -57,7 +57,7 @@ public class PisteTest {
 
     @Test
     void testGetById() throws Exception {
-        Long id = 1L; // Example ID
+        Long id = Long.valueOf(3); // Example ID
 
         // Create a sample Piste object to be returned when retrieved
         Piste piste = new Piste();
@@ -75,7 +75,7 @@ public class PisteTest {
 
     @Test
     void testDeleteById() throws Exception {
-        Long id = 1L; // Example ID
+        Long id = Long.valueOf(3);// Example ID
 
         // Mock the service to do nothing when delete is called
         doNothing().when(pisteServices).removePiste(id);
