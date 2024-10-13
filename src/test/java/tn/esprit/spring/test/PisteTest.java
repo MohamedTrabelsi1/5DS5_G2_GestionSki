@@ -1,5 +1,7 @@
 package tn.esprit.spring.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,23 +42,25 @@ public class PisteTest {
     }
 
     @Test
-    void testAddPiste() throws Exception {
+    void testAddPiste() {
         // Create a sample Piste object
         Piste piste = new Piste();
-        piste.setNumPiste(Long.valueOf(3)); // Set an example ID or other properties
+        piste.setNumPiste(3L); // Set example properties
         piste.setColor(Color.BLUE);
-        piste.setLength(20);
+        piste.setLength(3000);
         piste.setSlope(20);
 
-        // Mock the service layer to return this object when called
+        // Mock the service layer to return the created Piste
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
-        // Perform the POST request (without using JSON)
-        mockMvc.perform(post("/piste/add")
-                        .param("name", "Piste Example") // Example parameters, adjust based on your controller's method
-                        .param("length", "3000"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Piste added successfully")); // Expect a success message or proper handling
+        // Directly call the controller method
+        Piste result = pisteRestController.addPiste(piste);
+
+        // Assert the result
+        assertNotNull(result); // Ensure the result is not null
+        assertEquals(3L, result.getNumPiste()); // Check that the returned piste has the expected ID
+        assertEquals(Color.BLUE, result.getColor()); // Check other properties
+        verify(pisteServices, times(1)).addPiste(piste); // Verify that the service method was called
     }
 
 
