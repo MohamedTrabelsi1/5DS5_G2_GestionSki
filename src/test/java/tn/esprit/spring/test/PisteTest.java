@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import tn.esprit.spring.GestionStationSkiApplication;
 import tn.esprit.spring.controllers.PisteRestController;
 import tn.esprit.spring.entities.Piste;
@@ -23,7 +22,6 @@ import tn.esprit.spring.services.IPisteServices;
 
 @SpringBootTest(classes = GestionStationSkiApplication.class)
 @AutoConfigureMockMvc
-
 public class PisteTest {
 
     @Autowired
@@ -35,47 +33,59 @@ public class PisteTest {
     @InjectMocks
     private PisteRestController pisteRestController;
 
-    private ObjectMapper objectMapper;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        objectMapper = new ObjectMapper();
     }
 
     @Test
     void testAddPiste() throws Exception {
-        Piste piste = new Piste(); // Set properties as needed
+        // Create a sample Piste object
+        Piste piste = new Piste();
+        piste.setNumPiste(1L); // Set an example ID or other properties
+
+        // Mock the service layer to return this object when called
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
+        // Perform the POST request (without using JSON)
         mockMvc.perform(post("/piste/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(piste)))
+                        .param("name", "Piste Example") // Example parameters, adjust based on your controller's method
+                        .param("length", "3000"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(piste.getNumPiste())); // Adjust based on your Piste properties
+                .andExpect(content().string("Piste added successfully")); // Expect a success message or proper handling
     }
-
-    
 
     @Test
     void testGetById() throws Exception {
         Long id = 1L; // Example ID
-        Piste piste = new Piste(); // Set properties as needed
+
+        // Create a sample Piste object to be returned when retrieved
+        Piste piste = new Piste();
+        piste.setNumPiste(id);
+        piste.setNamePiste("Test Piste");
+
+        // Mock the service layer
         when(pisteServices.retrievePiste(id)).thenReturn(piste);
 
+        // Perform the GET request (without using JSON path)
         mockMvc.perform(get("/piste/get/{id-piste}", id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(piste.getNumPiste())); // Adjust based on your Piste properties
+                .andExpect(content().string("Piste ID: 1, Name: Test Piste")); // Adjust to match your expected output
     }
 
     @Test
     void testDeleteById() throws Exception {
         Long id = 1L; // Example ID
+
+        // Mock the service to do nothing when delete is called
         doNothing().when(pisteServices).removePiste(id);
 
+        // Perform the DELETE request
         mockMvc.perform(delete("/piste/delete/{id-piste}", id))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().string("Piste deleted successfully")); // Expect success message or similar output
 
-        verify(pisteServices, times(1)).removePiste(id); // Verify the service method was called
+        // Verify the service method was called
+        verify(pisteServices, times(1)).removePiste(id);
     }
 }
