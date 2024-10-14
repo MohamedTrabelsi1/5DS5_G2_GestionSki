@@ -52,7 +52,7 @@ public class PisteTest {
         piste.setLength(3000);
         piste.setSlope(20);
 
-        when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
+        when(pisteRestController.addPiste(any(Piste.class))).thenReturn(piste);
 
     }
 }
