@@ -100,7 +100,7 @@ public class PisteTest {
     @Test
     void testDeleteById() throws Exception {
         Piste p ;
-        List<Piste> pistes = pisteRestController.getAllPistes();
+        List<Piste> pistes = pisteServices.retrieveAllPistes();
         p=pistes.get(0);
 
         // Perform the DELETE request with path variable
