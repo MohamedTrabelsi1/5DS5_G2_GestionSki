@@ -14,8 +14,12 @@ import tn.esprit.spring.entities.Color;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.services.IPisteServices;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,5 +68,21 @@ public class PisteTest {
 
 
     }
+
+    @Test
+    void testGetAllPistes() throws Exception {
+
+        List<Piste> pistes = pisteRestController.getAllPistes();
+
+        when(pisteRestController.getAllPistes()).thenReturn(pistes);
+
+        // Perform the GET request
+        mockMvc.perform(get("/piste/all")
+                        .contentType(MediaType.APPLICATION_JSON))
+                ;
+}
+
+
+
 
 }
