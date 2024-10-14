@@ -14,13 +14,13 @@ import tn.esprit.spring.entities.Color;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.services.IPisteServices;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -100,10 +100,11 @@ public class PisteTest {
     @Test
     void testDeleteById() throws Exception {
         Piste p = new Piste();
-        p.setNumPiste(1L);
+        p.setNumPiste(2L);
         // Perform the DELETE request with path variable
         mockMvc.perform(delete("/piste/delete/"+ p.getNumPiste())
-                        .contentType(MediaType.APPLICATION_JSON));
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
         // Verify that the service method was called
 
     }
