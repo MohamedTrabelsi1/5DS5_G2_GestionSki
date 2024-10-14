@@ -42,25 +42,31 @@ public class PisteTest {
     }
 
     @Test
-    void testAddPiste() {
-        // Create a sample Piste object
+    void testAddPiste() throws Exception {
+        // Create a sample Piste object (as JSON)
+        String pisteJson = "{\"numPiste\": 3, \"color\": \"BLUE\", \"length\": 3000, \"slope\": 20}";
+
+        // Mock the service layer to return the created Piste
         Piste piste = new Piste();
-        piste.setNumPiste(3L); // Set example properties
+        piste.setNumPiste(3L);
         piste.setColor(Color.BLUE);
         piste.setLength(3000);
         piste.setSlope(20);
 
-        // Mock the service layer to return the created Piste
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
-        // Directly call the controller method
-        Piste result = pisteRestController.addPiste(piste);
+        // Use MockMvc to simulate HTTP POST request
+        mockMvc.perform(post("/piste/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(pisteJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.numPiste").value(3))
+                .andExpect(jsonPath("$.color").value("BLUE"))
+                .andExpect(jsonPath("$.length").value(3000))
+                .andExpect(jsonPath("$.slope").value(20));
 
-        // Assert the result
-        assertNotNull(result); // Ensure the result is not null
-        assertEquals(3L, result.getNumPiste()); // Check that the returned piste has the expected ID
-        assertEquals(Color.BLUE, result.getColor()); // Check other properties
-        verify(pisteServices, times(1)).addPiste(piste); // Verify that the service method was called
+        // Verify that the service method was called
+        verify(pisteServices, times(1)).addPiste(any(Piste.class));
     }
 
 
