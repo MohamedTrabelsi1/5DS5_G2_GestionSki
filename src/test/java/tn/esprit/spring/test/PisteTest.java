@@ -54,7 +54,7 @@ public class PisteTest {
         // Corrected pisteJson with namePiste included
         String pisteJson = "{\"namePiste\": \"" + piste.getNamePiste() + "\", \"color\": \"" + piste.getColor() + "\", \"length\": " + piste.getLength() + ", \"slope\": " + piste.getSlope() + "}";
 
-        when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
+        when(pisteRestController.addPiste(any(Piste.class))).thenReturn(piste);
 
         // Use MockMvc to simulate HTTP POST request
         mockMvc.perform(post("/piste/add")
@@ -62,7 +62,7 @@ public class PisteTest {
                         .content(pisteJson))
                 ;
 
-        
+
     }
 
 }
