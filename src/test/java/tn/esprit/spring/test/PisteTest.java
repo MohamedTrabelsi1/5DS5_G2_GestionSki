@@ -101,6 +101,7 @@ public class PisteTest {
     void testDeleteById() throws Exception {
         Piste p ;
         List<Piste> pistes = pisteServices.retrieveAllPistes();
+        System.out.println(pistes);
         p=pistes.get(0);
 
         // Perform the DELETE request with path variable
