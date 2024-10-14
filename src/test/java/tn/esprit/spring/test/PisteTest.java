@@ -77,7 +77,7 @@ public class PisteTest {
 
         // Perform the GET request
         mockMvc.perform(get("/piste/all")
-                        .contentType(MediaType.APPLICATION_JSON));
+                        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
 
     }
@@ -94,7 +94,7 @@ public class PisteTest {
 
         // Perform the GET request with path variable
         mockMvc.perform(get("/piste/get/"+piste.getNumPiste())
-                        .contentType(MediaType.APPLICATION_JSON));
+                        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
     }
     @Test
