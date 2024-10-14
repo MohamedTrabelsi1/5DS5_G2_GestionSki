@@ -52,7 +52,19 @@ public class PisteTest {
         piste.setLength(3000);
         piste.setSlope(20);
 
-        when(pisteRestController.addPiste(any(Piste.class))).thenReturn(piste);
+        when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
+        // Use MockMvc to simulate HTTP POST request
+        mockMvc.perform(post("/piste/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(pisteJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.numPiste").value(piste.getNumPiste()))
+                .andExpect(jsonPath("$.color").value(piste.getColor()))
+                .andExpect(jsonPath("$.length").value(piste.getLength()))
+                .andExpect(jsonPath("$.slope").value(piste.getSlope()));
+
+        // Verify that the service method was called
+        verify(pisteRestController, times(1)).addPiste(any(Piste.class));
     }
 }
