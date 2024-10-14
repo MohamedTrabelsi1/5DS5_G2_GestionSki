@@ -43,7 +43,7 @@ public class PisteTest {
     @Test
     void testAddPiste() throws Exception {
         // Create a sample Piste object (as JSON)
-        String pisteJson = "{\"numPiste\": 3, \"color\": \"BLUE\", \"length\": 3000, \"slope\": 20}";
+        String pisteJson = "{\"numPiste\": 3, \"color\": \"BLUE\", \"length\": 3000, \"slope\": 30}";
 
         // Mock the service layer to return the created Piste
         Piste piste = new Piste();
