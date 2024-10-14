@@ -99,8 +99,10 @@ public class PisteTest {
     }
     @Test
     void testDeleteById() throws Exception {
-        Piste p = new Piste();
-        p.setNumPiste(9L);
+        Piste p ;
+        List<Piste> pistes = pisteRestController.getAllPistes();
+        p=pistes.get(0);
+
         // Perform the DELETE request with path variable
         mockMvc.perform(delete("/piste/delete/"+ p.getNumPiste())
                         .contentType(MediaType.APPLICATION_JSON))
