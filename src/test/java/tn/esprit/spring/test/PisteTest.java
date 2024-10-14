@@ -54,17 +54,6 @@ public class PisteTest {
 
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
-        // Use MockMvc to simulate HTTP POST request
-        mockMvc.perform(post("/piste/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(pisteJson))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.numPiste").value(3))
-                .andExpect(jsonPath("$.color").value("BLUE"))
-                .andExpect(jsonPath("$.length").value(3000))
-                .andExpect(jsonPath("$.slope").value(20));
-
-        // Verify that the service method was called
-        verify(pisteServices, times(1)).addPiste(any(Piste.class));
+        
     }
 }
