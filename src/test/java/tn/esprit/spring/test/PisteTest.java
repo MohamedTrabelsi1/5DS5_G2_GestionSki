@@ -57,7 +57,7 @@ public class PisteTest {
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
         // Use MockMvc to simulate HTTP POST request
-        mockMvc.perform(post("/piste/add")
+        mockMvc.perform(post("/api/piste/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(pisteJson))
                 .andExpect(status().isOk())
