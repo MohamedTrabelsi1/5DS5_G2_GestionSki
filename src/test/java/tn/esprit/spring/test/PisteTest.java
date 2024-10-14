@@ -79,10 +79,25 @@ public class PisteTest {
         // Perform the GET request
         mockMvc.perform(get("/piste/all")
                         .contentType(MediaType.APPLICATION_JSON))
-                ;
-}
+;
+
+    }
 
 
+    @Test
+    void testGetById() throws Exception {
+        // Mock the service layer to return a specific Piste
+        Piste piste = new Piste();
+        piste.setNumPiste(1L);
+
+
+        when(pisteRestController.getById(piste.getNumPiste())).thenReturn(piste);
+
+        // Perform the GET request with path variable
+        mockMvc.perform(get("/piste/get/"+piste.getNumPiste())
+                        .contentType(MediaType.APPLICATION_JSON))
+              ;
+    }
 
 
 }
