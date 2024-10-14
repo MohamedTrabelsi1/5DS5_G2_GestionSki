@@ -103,7 +103,7 @@ public class PisteTest {
         p.setNumPiste(1L);
         // Perform the DELETE request with path variable
         mockMvc.perform(delete("/piste/delete/"+ p.getNumPiste())
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON));
         // Verify that the service method was called
 
     }
