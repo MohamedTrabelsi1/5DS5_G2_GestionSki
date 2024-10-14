@@ -19,8 +19,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -78,8 +77,8 @@ public class PisteTest {
 
         // Perform the GET request
         mockMvc.perform(get("/piste/all")
-                        .contentType(MediaType.APPLICATION_JSON))
-;
+                        .contentType(MediaType.APPLICATION_JSON));
+
 
     }
 
@@ -95,9 +94,18 @@ public class PisteTest {
 
         // Perform the GET request with path variable
         mockMvc.perform(get("/piste/get/"+piste.getNumPiste())
-                        .contentType(MediaType.APPLICATION_JSON))
-              ;
-    }
+                        .contentType(MediaType.APPLICATION_JSON));
 
+    }
+    @Test
+    void testDeleteById() throws Exception {
+        Piste p = new Piste();
+        p.setNumPiste(1L);
+        // Perform the DELETE request with path variable
+        mockMvc.perform(delete("/piste/delete/"+ p.getNumPiste())
+                        .contentType(MediaType.APPLICATION_JSON)
+        // Verify that the service method was called
+
+    }
 
 }
