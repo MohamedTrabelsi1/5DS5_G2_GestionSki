@@ -43,15 +43,16 @@ public class PisteTest {
     @Test
     void testAddPiste() throws Exception {
         // Create a sample Piste object (as JSON)
-        String pisteJson = "{\"numPiste\": 3, \"color\": \"BLUE\", \"length\": 3000, \"slope\": 30}";
 
         // Mock the service layer to return the created Piste
         Piste piste = new Piste();
-
         piste.setColor(Color.BLUE);
         piste.setLength(3000);
         piste.setSlope(20);
         piste.setNamePiste("Test");
+
+        // Corrected pisteJson with namePiste included
+        String pisteJson = "{\"namePiste\": \"" + piste.getNamePiste() + "\", \"color\": \"" + piste.getColor() + "\", \"length\": " + piste.getLength() + ", \"slope\": " + piste.getSlope() + "}";
 
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
@@ -68,4 +69,5 @@ public class PisteTest {
         // Verify that the service method was called
         verify(pisteRestController, times(1)).addPiste(any(Piste.class));
     }
+
 }
