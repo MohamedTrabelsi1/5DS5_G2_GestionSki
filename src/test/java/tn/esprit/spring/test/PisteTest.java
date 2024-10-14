@@ -1,11 +1,4 @@
 package tn.esprit.spring.test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,16 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-
 import org.springframework.test.web.servlet.MockMvc;
-import tn.esprit.spring.GestionStationSkiApplication;
 import tn.esprit.spring.controllers.PisteRestController;
 import tn.esprit.spring.entities.Color;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.services.IPisteServices;
 
-@SpringBootTest(classes = GestionStationSkiApplication.class)
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
 @AutoConfigureMockMvc
+
 public class PisteTest {
 
     @Autowired
@@ -38,6 +36,7 @@ public class PisteTest {
 
     @BeforeEach
     void setUp() {
+        // Initialize mocks
         MockitoAnnotations.openMocks(this);
     }
 
@@ -68,8 +67,4 @@ public class PisteTest {
         // Verify that the service method was called
         verify(pisteServices, times(1)).addPiste(any(Piste.class));
     }
-
-
-
-
 }
