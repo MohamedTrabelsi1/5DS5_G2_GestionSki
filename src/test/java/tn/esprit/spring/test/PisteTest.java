@@ -47,10 +47,11 @@ public class PisteTest {
 
         // Mock the service layer to return the created Piste
         Piste piste = new Piste();
-        piste.setNumPiste(3L);
+
         piste.setColor(Color.BLUE);
         piste.setLength(3000);
         piste.setSlope(20);
+        piste.setNamePiste("Test");
 
         when(pisteServices.addPiste(any(Piste.class))).thenReturn(piste);
 
@@ -59,7 +60,7 @@ public class PisteTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(pisteJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.numPiste").value(piste.getNumPiste()))
+                .andExpect(jsonPath("$.namePiste").value(piste.getNamePiste()))
                 .andExpect(jsonPath("$.color").value(piste.getColor()))
                 .andExpect(jsonPath("$.length").value(piste.getLength()))
                 .andExpect(jsonPath("$.slope").value(piste.getSlope()));
